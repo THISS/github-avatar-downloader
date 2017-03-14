@@ -14,16 +14,23 @@ function getContributorsURL(repoOwner, repoName) {
 }
 // GET the URL
 function getContributorsJSON(url) {
-  request.get(url, (data) => {
-    return data;
+  let options = {
+    url: url,
+    headers: {
+      'User-Agent': 'GitHub Avatar Downloader - Student Project'
+    }
+  };
+  request.get(options, (err, response, body) => {
+    return JSON.parse(body);
   })
   .on('response', (res) =>{
-    console.log(`Response Code: ${res.statusCode}`)
+    console.log(`Response Code: ${res.statusCode}`);
+    console.log(`Response Message: ${res.statusMessage}`);
     });
 }
 let url = getContributorsURL('nodejs', 'node');
 let contributorsList = getContributorsJSON(url);
-console.log(contributorsList);
+
 // Parse the returned JSON
 // Loop Over the avatars
 // // Save each to disk under avatars/ directory
