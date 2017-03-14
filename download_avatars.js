@@ -22,13 +22,22 @@ function printAvatarURL(contributor) {
 function downloadImageByURL(url, filePath) {
   request(url)
     .pipe(fs.createWriteStream(filePath))
+    .on('finish', () => {
+      console.log(`File Downloaded To ${filePath}`);
+    })
     .on('error', (err) => {
       throw err;
     });
 }
-let theURL = 'https://avatars3.githubusercontent.com/u/1615?v=3';
-let thePath = 'avatars/kvirani.jpg';
-downloadImageByURL(theURL, thePath);
+
+// This is my helper function that will take a contributor and use downloadImageByURL
+// passing in the 2 arguments it requires in its signature
+function dataGrabber(contributor) {
+  let avatarURL = contributor.avatar_url;
+  let path = `avatars/${contributor.login}.jpg`;
+  // Call the function
+  downloadImageByURL(avatarURL, path);
+}
 
 // Get Contributors
 // Our main controlling function
@@ -61,12 +70,10 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 
 // Call our function
-// getRepoContributors('jquery', 'jquery', function(err, result) {
-//   console.log("Errors:", err);
-//   console.log("Result:", result);
-//   // Loop Over the avatars
-//   result.forEach(printAvatarURL);
-// });
+getRepoContributors('jquery', 'jquery', function(err, result) {
+  console.log("Errors:", err);
+  // console.log("Result:", result);
+  // Loop Over the avatars
+  result.forEach(dataGrabber);
+});
 
-
-// // Save each to disk under avatars/ directory
