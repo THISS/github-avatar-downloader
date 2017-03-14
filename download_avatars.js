@@ -11,7 +11,7 @@ const OWNER = process.argv[2];
 
 // Initial Setup - make sure that we have our avatar dir if it doesn't exist
 if (!fs.existsSync(AVATAR_DIR)){
-    fs.mkdirSync(AVATAR_DIR);
+  fs.mkdirSync(AVATAR_DIR);
 }
 
 console.log('Welcome to the GitHub Avatar Downloader!');
