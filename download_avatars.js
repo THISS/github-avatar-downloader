@@ -12,8 +12,18 @@ console.log('Welcome to the GitHub Avatar Downloader!');
 function getContributorsURL(repoOwner, repoName) {
   return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`;
 }
-console.log(getContributorsURL('jquery', 'jquery'));
 // GET the URL
+function getContributorsJSON(url) {
+  request.get(url, (data) => {
+    return data;
+  })
+  .on('response', (res) =>{
+    console.log(`Response Code: ${res.statusCode}`)
+    });
+}
+let url = getContributorsURL('nodejs', 'node');
+let contributorsList = getContributorsJSON(url);
+console.log(contributorsList);
 // Parse the returned JSON
 // Loop Over the avatars
 // // Save each to disk under avatars/ directory
