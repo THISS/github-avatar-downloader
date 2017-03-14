@@ -27,9 +27,9 @@ try {
       throw err;
     }
     // Loop Over the avatars and download them
-    result.forEach(dataGrabber);
+    result.forEach(gitLib.dataGrabber);
   });
 }catch(e) {
-  console.log(`An Error Occurred: ${e.name} - "${e.message}");
+  console.log(`An Error Occurred: ${e.name} - "${e.message}"`);
 }
 

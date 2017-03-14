@@ -18,7 +18,7 @@ function getContributorsURL(repoOwner, repoName) {
   return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`;
 }
 
-// Helper function to print each contributor Avatar to console
+// Helper function to print each contributor Avatar URL to console
 function printAvatarURL(contributor) {
   console.log(contributor.avatar_url);
 }
@@ -50,7 +50,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   if(!(repoOwner && repoName)) {
     console.log("You need to give us a User and their Repository name");
-    return;
+    throw new Error("Need to have a user and repository.");
   }
 
   let url = getContributorsURL(repoOwner, repoName);
@@ -79,5 +79,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
   });
 }
 module.exports = {
-  getRepoContributors: getRepoContributors
+  getRepoContributors: getRepoContributors,
+  dataGrabber: dataGrabber
 };
