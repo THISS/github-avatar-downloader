@@ -3,12 +3,21 @@ let request = require('request');
 let fs = require('fs');
 require('dotenv').config();
 
+if(!(process.env.GITHUB_API && process.env.USER)) {
+  throw(new Error("Need to configure a .env file in: " + __dirname));
+}
 const GITHUB_API_KEY = process.env.GITHUB_API;
 const GITHUB_USER = process.env.USER;
 const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
 const AVATAR_DIR = './avatars/';
 const REPO = process.argv[3];
 const OWNER = process.argv[2];
+
+
+if(process.argv.length > 4) {
+  console.log("Please only provide a username and a repository in the form <USER> <REPOSITORY>");
+  throw(new Error("Too Many Words"));
+}
 
 // Initial Setup - make sure that we have our avatar dir if it doesn't exist
 if (!fs.existsSync(AVATAR_DIR)){
