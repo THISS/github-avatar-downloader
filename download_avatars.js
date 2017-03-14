@@ -9,8 +9,6 @@ const AVATAR_DIR = './avatars/';
 const REPO = process.argv[3];
 const OWNER = process.argv[2];
 
-
-
 // Initial Setup - make sure that we have our avatar dir if it doesn't exist
 if (!fs.existsSync(AVATAR_DIR)){
     fs.mkdirSync(AVATAR_DIR);
@@ -52,6 +50,12 @@ function dataGrabber(contributor) {
 // Get Contributors
 // Our main controlling function
 function getRepoContributors(repoOwner, repoName, cb) {
+
+  if(!(repoOwner && repoName)) {
+    console.log("You need to give us a User and their Repository name");
+    return;
+  }
+
   let url = getContributorsURL(repoOwner, repoName);
 
   let options = {
