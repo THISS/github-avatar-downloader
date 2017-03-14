@@ -1,5 +1,7 @@
 # Avatars Dir
 avatars
+# ENV File
+.env
 # Logs
 logs
 *.log

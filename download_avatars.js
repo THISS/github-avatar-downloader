@@ -1,9 +1,10 @@
 // import the request module and fs module
 let request = require('request');
 let fs = require('fs');
+require('dotenv').config();
 
-const GITHUB_API_KEY = '153e7349fec2a30b41621ded8138bacc9d3e6372';
-const GITHUB_USER = 'THISS';
+const GITHUB_API_KEY = process.env.GITHUB_API;
+const GITHUB_USER = process.env.USER;
 const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
 const AVATAR_DIR = './avatars/';
 const REPO = process.argv[3];
