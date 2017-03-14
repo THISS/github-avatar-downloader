@@ -5,6 +5,12 @@ let fs = require('fs');
 const GITHUB_API_KEY = '153e7349fec2a30b41621ded8138bacc9d3e6372';
 const GITHUB_USER = 'THISS';
 const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
+const AVATAR_DIR = './avatars/';
+
+// Initial Setup - make sure that we have our avatar dir if it doesn't exist
+if (!fs.existsSync(AVATAR_DIR)){
+    fs.mkdirSync(AVATAR_DIR);
+}
 
 console.log('Welcome to the GitHub Avatar Downloader!');
 
@@ -34,7 +40,7 @@ function downloadImageByURL(url, filePath) {
 // passing in the 2 arguments it requires in its signature
 function dataGrabber(contributor) {
   let avatarURL = contributor.avatar_url;
-  let path = `avatars/${contributor.login}.jpg`;
+  let path = `${AVATAR_DIR}${contributor.login}.jpg`;
   // Call the function
   downloadImageByURL(avatarURL, path);
 }
