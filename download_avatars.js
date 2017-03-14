@@ -24,6 +24,12 @@ try {
   // Call our function
   gitLib.getRepoContributors(OWNER, REPO, function(err, result) {
     if(err){
+      console.log(err);
+      if(err === "Not Found") {
+        let e = new Error('The repository you were looking for could not be found - please check the repository and username');
+        e.name = "Repo Not Found";
+        throw e;
+      }
       throw err;
     }
     // Loop Over the avatars and download them

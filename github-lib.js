@@ -66,17 +66,17 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request.get(options, (err, response, body) => {
     // Parse the returned JSON and pass it to our callback
     cb(null, JSON.parse(body));
-  })
-  .on('error', (err) => {
-    cb(err);
-  })
-  .on('response', (res) =>{
-    if(res.statusCode > 399) {
-      cb(res.statusMessage);
-    }
-    // console.log(`Response Code: ${res.statusCode}`);
-    // console.log(`Response Message: ${res.statusMessage}`);
-  });
+    })
+    .on('error', (err) => {
+      cb(err);
+    })
+    .on('response', (res) =>{
+      if(res.statusCode > 399) {
+        cb(res.statusMessage);
+      }
+      // console.log(`Response Code: ${res.statusCode}`);
+      // console.log(`Response Message: ${res.statusMessage}`);
+    });
 }
 module.exports = {
   getRepoContributors: getRepoContributors,
