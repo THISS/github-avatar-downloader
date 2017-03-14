@@ -8,6 +8,11 @@ const GITHUB_USER = process.env.USER;
 const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
 const AVATAR_DIR = './avatars/';
 
+// Initial Setup - make sure that we have our avatar dir if it doesn't exist
+if (!fs.existsSync(AVATAR_DIR)){
+  fs.mkdirSync(AVATAR_DIR);
+}
+
 // compile our URL endpoint
 function getContributorsURL(repoOwner, repoName) {
   return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`;
@@ -73,3 +78,6 @@ function getRepoContributors(repoOwner, repoName, cb) {
     // console.log(`Response Message: ${res.statusMessage}`);
   });
 }
+module.exports = {
+  getRepoContributors: getRepoContributors
+};
