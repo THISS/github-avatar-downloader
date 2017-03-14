@@ -18,6 +18,18 @@ function printAvatarURL(contributor) {
   console.log(contributor.avatar_url);
 }
 
+// save file to disk
+function downloadImageByURL(url, filePath) {
+  request(url)
+    .pipe(fs.createWriteStream(filePath))
+    .on('error', (err) => {
+      throw err;
+    });
+}
+let theURL = 'https://avatars3.githubusercontent.com/u/1615?v=3';
+let thePath = 'avatars/kvirani.jpg';
+downloadImageByURL(theURL, thePath);
+
 // Get Contributors
 // Our main controlling function
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -34,21 +46,27 @@ function getRepoContributors(repoOwner, repoName, cb) {
   request.get(options, (err, response, body) => {
     // Parse the returned JSON and pass it to our callback
     cb(null, JSON.parse(body));
+  })
+  .on('error', (err) => {
+    cb(err);
+  })
+  .on('response', (res) =>{
+    if(res.statusCode > 399) {
+      cb(res.statusMessage);
+    }
+    // console.log(`Response Code: ${res.statusCode}`);
+    // console.log(`Response Message: ${res.statusMessage}`);
   });
-  // .on('response', (res) =>{
-  //   console.log(`Response Code: ${res.statusCode}`);
-  //   console.log(`Response Message: ${res.statusMessage}`);
-  // });
 }
 
 
 // Call our function
-getRepoContributors('jquery', 'jquery', function(err, result) {
-  console.log("Errors:", err);
-  console.log("Result:", result);
-  // Loop Over the avatars
-  result.forEach(printAvatarURL);
-});
+// getRepoContributors('jquery', 'jquery', function(err, result) {
+//   console.log("Errors:", err);
+//   console.log("Result:", result);
+//   // Loop Over the avatars
+//   result.forEach(printAvatarURL);
+// });
 
 
 // // Save each to disk under avatars/ directory
