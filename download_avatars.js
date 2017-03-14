@@ -6,6 +6,10 @@ const GITHUB_API_KEY = '153e7349fec2a30b41621ded8138bacc9d3e6372';
 const GITHUB_USER = 'THISS';
 const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
 const AVATAR_DIR = './avatars/';
+const REPO = process.argv[3];
+const OWNER = process.argv[2];
+
+
 
 // Initial Setup - make sure that we have our avatar dir if it doesn't exist
 if (!fs.existsSync(AVATAR_DIR)){
@@ -76,7 +80,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
 
 // Call our function
-getRepoContributors('jquery', 'jquery', function(err, result) {
+getRepoContributors(OWNER, REPO, function(err, result) {
   console.log("Errors:", err);
   // console.log("Result:", result);
   // Loop Over the avatars
