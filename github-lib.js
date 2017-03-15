@@ -64,6 +64,9 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   //  Main request to GitHub api
   request.get(options, (err, response, body) => {
+    if(err.message === "Not Found") {
+      throw err;
+    }
     // Parse the returned JSON and pass it to our callback
     cb(null, JSON.parse(body));
     })
