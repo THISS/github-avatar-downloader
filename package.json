@@ -4,8 +4,8 @@
   "description": "## Problem Statement",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "debug": "node --inspect=5858"
+    "test": "mocha",
+    "debug": "node --debug=5858"
   },
   "repository": {
     "type": "git",
