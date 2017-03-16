@@ -5,8 +5,9 @@ let fs = require('fs');
 // No Touchy - unless you know what you are doing
 const GITHUB_API_KEY = process.env.GITHUB_API;
 const GITHUB_USER = process.env.USER;
-const BASE_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
+const API_URL = `https://${GITHUB_USER}:${GITHUB_API_KEY}@api.github.com/`;
 const AVATAR_DIR = './avatars/';
+const BASE_URL = `https://api.github.com/`;
 
 // Initial Setup - make sure that we have our avatar dir if it doesn't exist
 if (!fs.existsSync(AVATAR_DIR)){
@@ -14,8 +15,11 @@ if (!fs.existsSync(AVATAR_DIR)){
 }
 
 // compile our URL endpoint
-function getContributorsURL(repoOwner, repoName) {
-  return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`;
+function getContributorsURL(repoOwner, repoName, useAPI) {
+  if(useAPI){
+    return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`;
+  }
+  return `${BASE_URL}repos/${repoOwner}/${repoName}/contributors`
 }
 
 // Helper function to print each contributor Avatar URL to console
@@ -46,16 +50,16 @@ function dataGrabber(contributor) {
 
 // Get Contributors
 // Our main controlling function
-function getRepoContributors(repoOwner, repoName, cb) {
+function getRepoContributors(repoOwner, repoName, useAPI, cb) {
 
   if(!(repoOwner && repoName)) {
     console.log("You need to give us a User and their Repository name");
     throw new Error("Need to have a user and repository.");
   }
 
-  let url = getContributorsURL(repoOwner, repoName);
+  const url = getContributorsURL(repoOwner, repoName, useAPI);
 
-  let options = {
+  const options = {
     url: url,
     headers: {
       'User-Agent': 'GitHub Avatar Downloader - Student Project'
@@ -64,7 +68,7 @@ function getRepoContributors(repoOwner, repoName, cb) {
 
   //  Main request to GitHub api
   request.get(options, (err, response, body) => {
-    if(err && err.message === "Not Found") {
+    if(err) {
       throw err;
     }
     // Parse the returned JSON and pass it to our callback

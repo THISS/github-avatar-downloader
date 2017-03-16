@@ -5,8 +5,11 @@ const gitLib = require('./github-lib');
 
 function main() {
   // Initial Setup - Make Sure Process.env has our two keys from our .env file
+  let useAPI = true;
   if(!((process.env.GITHUB_API && process.env.GITHUB_API.length > 0) && (process.env.USER && process.env.USER.length > 0))) {
-    throw(new Error("Need to configure a .env file in: " + __dirname));
+    // throw(new Error("Need to configure a .env file in: " + __dirname));
+    console.log(".env file does not have credentials in it yet")
+    useAPI = false;
   }
 
   // Makes sure we are only receiving two words as input
@@ -22,19 +25,18 @@ function main() {
   console.log('Welcome to the GitHub Avatar Downloader!');
 
   // Call our function
-  gitLib.getRepoContributors(OWNER, REPO, function(err, result) {
+  gitLib.getRepoContributors(OWNER, REPO, useAPI, function(err, result) {
     if(err){
-      throw err;
+      console.log(`An Error Occurred: ${err}`);
+      return err;
     }
-    // Loop Over the avatars and download them
-    result.forEach(gitLib.dataGrabber);
+    if(result && result.length > 0){
+      // Loop Over the avatars and download them
+      result.forEach(gitLib.dataGrabber);
+    }
   });
 }
 
-// Wrap everything in a try catch block to make sure we handle the errors nicely
-try {
-  main();
-}catch(e) {
-  console.log(`An Error Occurred: ${e.name} - "${e.message}"`);
-}
+main();
+
 
