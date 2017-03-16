@@ -1,5 +1,6 @@
 // Adding .env key vals to environment
 require('dotenv').config();
+const gitLib = require('./github-lib.js');
 
 // Wrap everything in a try catch block to make sure we handle the errors nicely
 try {

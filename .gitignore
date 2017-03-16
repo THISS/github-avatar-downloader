@@ -2,6 +2,7 @@
 avatars
 # ENV File
 .env
+.vscode_launch.json
 # Logs
 logs
 *.log
