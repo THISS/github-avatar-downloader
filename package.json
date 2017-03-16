@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "debug": "node --debug=5858"
+    "debug": "node --debug=5858 download_avatars.js jquery ja"
   },
   "repository": {
     "type": "git",
